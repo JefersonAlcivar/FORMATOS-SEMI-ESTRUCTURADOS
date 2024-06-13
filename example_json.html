@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JSON Example</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Books from JSON</h1>
+        <div id="json-books"></div>
+    </div>
+
+    <script>
+        // Función para cargar el JSON
+        function loadJSONDoc(filename) {
+            return fetch(filename)
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error(`HTTP error! status: ${response.status}`);
+                    }
+                    return response.json();
+                });
+        }
+
+        // Cargar y procesar el JSON
+        loadJSONDoc('books.json').then(data => {
+            let output = '';
+            data.bookstore.forEach(book => {
+                output += `
+                    <div class="book">
+                        <p class="title">Title: ${book.title}</p>
+                        <p>Author: ${book.author}</p>
+                        <p>Price: $${book.price}</p>
+                    </div>
+                `;
+            });
+            document.getElementById('json-books').innerHTML = output;
+        }).catch(error => {
+            console.error('Error al cargar el JSON:', error);
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>XML Example</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Books from XML</h1>
+        <div id="xml-books"></div>
+    </div>
+
+    <script>
+        // Función para cargar el XML
+        function loadXMLDoc(filename) {
+            return fetch(filename)
+                .then(response => response.text())
+                .then(str => (new window.DOMParser()).parseFromString(str, "text/xml"));
+        }
+
+        // Cargar y procesar el XML
+        loadXMLDoc('books.xml').then(xmlDoc => {
+            const books = xmlDoc.getElementsByTagName('book');
+            let output = '';
+            for (let i = 0; i < books.length; i++) {
+                const title = books[i].getElementsByTagName('title')[0].childNodes[0].nodeValue;
+                const author = books[i].getElementsByTagName('author')[0].childNodes[0].nodeValue;
+                const price = books[i].getElementsByTagName('price')[0].childNodes[0].nodeValue;
+                output += `
+                    <div class="book">
+                        <p class="title">Title: ${title}</p>
+                        <p>Author: ${author}</p>
+                        <p>Price: $${price}</p>
+                    </div>
+                `;
+            }
+            document.getElementById('xml-books').innerHTML = output;
+        });
+    </script>
+</body>
+</html>

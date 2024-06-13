@@ -1,0 +1,14 @@
+{
+    "bookstore": [
+        {
+            "title": "Learning JSON",
+            "author": "Elliotte Rusty Harold",
+            "price": 34.95
+        },
+        {
+            "title": "Understanding JSON",
+            "author": "John Smith",
+            "price": 29.95
+        }
+    ]
+}
